@@ -1,0 +1,116 @@
+  :root {
+    --footer-height: 85px;
+    --footer-md-height: 57px;
+
+    --custom-primary: #343a40;
+    --custom-primary-text: #fff;
+    --custom-background: #fff;
+    --custom-text: #000;
+    --custom-secondary: #0069d9;
+    --custom-secondary-text: #fff;
+  }
+
+  html{
+    font-size: 14px;
+  }
+
+  .bg-custom {
+      background-color: var(--custom-primary) !important;
+  }
+
+  #main{
+    margin-bottom: var(--footer-height);
+  }
+
+  #player{
+    height: var(--footer-height);
+    width: 100%;
+
+    &.disabled .overload{
+      background-color: var(--gray-dark);
+      position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      opacity: 0.6;
+    }
+  }
+
+  .primary-controls{
+    position: absolute;
+    top:0;
+    //left: 0;
+    bottom: 0;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .secondary-controls{
+    margin-left: 70px;
+  }
+
+  #main-menu{
+    .btn{
+      white-space: nowrap;
+    }
+  }
+
+  #btn-options::after {
+    content: none;
+  }
+
+  .carousel-item{
+    min-height: calc( 100vh - var(--footer-height) - 47px - 56px);
+  }
+
+  .time{
+    font-size: .8rem;
+  }
+
+  
+
+  @media (max-width: 768px) {
+    .container {
+      max-width: none;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .w-md-auto{
+      width: auto !important;
+    }
+    #main-menu{
+      min-width: 310px;
+    }
+    #main{
+      margin-bottom: var(--footer-md-height);
+    }
+    #player{
+      height: var(--footer-md-height);
+    }
+    .carousel-item{
+      min-height: calc( 100vh - var(--footer-md-height) - 56px);
+    }
+  }
+
+  @media (max-height: 154px ) {
+    #player{
+      position: static;
+    }
+  }
+
+  #btn-info.disabled{
+    cursor: default;
+    color: var(--gray) !important;
+  }
+
+
+@import 'custom_range';
+@import 'switch';
+@import 'notice';
+@import 'playlist';
+@import 'bs_mods';

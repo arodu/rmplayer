@@ -1,0 +1,185 @@
+
+@mixin thumb($med) {
+  background-color: var(--white);
+  border: 2px solid var(--gray-dark);
+  width: $med;
+  height: $med;
+}
+
+@mixin track() {
+  border-radius: 0;
+  z-index: 0;
+  height: 4px;
+  top: 12px;
+  transition: background-image .3s;
+}
+
+#timer{
+  position: relative;
+  height: 16px;
+
+  .buffer{
+    height: 3px;
+    position: absolute;
+    top: 3px;
+    width: 0;
+    background: var(--gray);
+    z-index: -1;
+  }
+
+}
+
+.custom-range {
+  //width: 100%;
+  //height: calc(#{$custom-range-thumb-height} + #{$custom-range-thumb-focus-box-shadow-width * 2});
+  //padding: 0; // Need to reset padding
+  //background-color: transparent;
+  //appearance: none;
+  height: 16px;
+
+  &:focus {
+    //outline: none;
+
+    // Pseudo-elements must be split across multiple rulesets to have an effect.
+    // No box-shadow() mixin for focus accessibility.
+    &::-webkit-slider-thumb {
+      //box-shadow: $custom-range-thumb-focus-box-shadow;
+    }
+    &::-moz-range-thumb     {
+      //box-shadow: $custom-range-thumb-focus-box-shadow;
+    }
+    &::-ms-thumb            {
+      //box-shadow: $custom-range-thumb-focus-box-shadow;
+    }
+  }
+
+  &::-moz-focus-outer {
+    //border: 0;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb(1.4rem);
+    margin-top: -10px;
+    //width: $custom-range-thumb-width;
+    //height: $custom-range-thumb-height;
+    //margin-top: ($custom-range-track-height - $custom-range-thumb-height) / 2; // Webkit specific
+    //@include gradient-bg($custom-range-thumb-bg);
+    //border: $custom-range-thumb-border;
+    //@include border-radius($custom-range-thumb-border-radius);
+    //@include box-shadow($custom-range-thumb-box-shadow);
+    //@include transition($custom-forms-transition);
+    //appearance: none;
+
+    &:active {
+      //@include gradient-bg($custom-range-thumb-active-bg);
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+    //width: $custom-range-track-width;
+    //height: $custom-range-track-height;
+    //color: transparent; // Why?
+    //cursor: $custom-range-track-cursor;
+    //background-color: $custom-range-track-bg;
+    //border-color: transparent;
+    //@include border-radius($custom-range-track-border-radius);
+    //@include box-shadow($custom-range-track-box-shadow);
+  }
+
+  &::-moz-range-thumb {
+    @include thumb(1.2rem);
+    //width: $custom-range-thumb-width;
+    //height: $custom-range-thumb-height;
+    //@include gradient-bg($custom-range-thumb-bg);
+    //border: $custom-range-thumb-border;
+    //@include border-radius($custom-range-thumb-border-radius);
+    //@include box-shadow($custom-range-thumb-box-shadow);
+    //@include transition($custom-forms-transition);
+    //appearance: none;
+
+    &:active {
+      //@include gradient-bg($custom-range-thumb-active-bg);
+    }
+  }
+
+  &::-moz-range-track {
+    @include track();
+    //width: $custom-range-track-width;
+    //height: $custom-range-track-height;
+    //color: transparent;
+    //cursor: $custom-range-track-cursor;
+    //background-color: $custom-range-track-bg;
+    //border-color: transparent; // Firefox specific?
+    //@include border-radius($custom-range-track-border-radius);
+    //@include box-shadow($custom-range-track-box-shadow);
+  }
+
+  &::-ms-thumb {
+    @include thumb(1.2rem);
+    //width: $custom-range-thumb-width;
+    //height: $custom-range-thumb-height;
+    //margin-top: 0; // Edge specific
+    //margin-right: $custom-range-thumb-focus-box-shadow-width; // Workaround that overflowed box-shadow is hidden.
+    //margin-left: $custom-range-thumb-focus-box-shadow-width;  // Workaround that overflowed box-shadow is hidden.
+    //@include gradient-bg($custom-range-thumb-bg);
+    //border: $custom-range-thumb-border;
+    //@include border-radius($custom-range-thumb-border-radius);
+    //@include box-shadow($custom-range-thumb-box-shadow);
+    //@include transition($custom-forms-transition);
+    //appearance: none;
+
+    &:active {
+      //@include gradient-bg($custom-range-thumb-active-bg);
+    }
+  }
+
+  &::-ms-track {
+    @include track();
+    //width: $custom-range-track-width;
+    //height: $custom-range-track-height;
+    //color: transparent;
+    //cursor: $custom-range-track-cursor;
+    //background-color: transparent;
+    //border-color: transparent;
+    //border-width: $custom-range-thumb-height / 2;
+    //@include box-shadow($custom-range-track-box-shadow);
+  }
+
+  &::-ms-fill-lower {
+    //background-color: $custom-range-track-bg;
+    //@include border-radius($custom-range-track-border-radius);
+  }
+
+  &::-ms-fill-upper {
+    //margin-right: 15px; // arbitrary?
+    //background-color: $custom-range-track-bg;
+    //@include border-radius($custom-range-track-border-radius);
+  }
+
+  &:disabled {
+    opacity: .4;
+
+    &::-webkit-slider-thumb {
+      //background-color: $custom-range-thumb-disabled-bg;
+    }
+
+    &::-webkit-slider-runnable-track {
+      //cursor: default;
+      background-color: var(--gray);
+    }
+
+    &::-moz-range-thumb {
+      //background-color: $custom-range-thumb-disabled-bg;
+    }
+
+    &::-moz-range-track {
+      //cursor: default;
+      background-color: var(--gray);
+    }
+
+    &::-ms-thumb {
+      //background-color: $custom-range-thumb-disabled-bg;
+    }
+  }
+}

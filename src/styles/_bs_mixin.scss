@@ -1,0 +1,57 @@
+
+@mixin button-variant($color, $background, $border) {
+  color: var($color);
+  background-color: var($background);
+  border-color: var($border);
+
+  &:focus,
+  &.focus {
+    color: var($color);
+    background-color: darken(var($background), 10%);
+    border-color: darken(var($border), 25%);
+  }
+  &:hover {
+    color: var($color);
+    background-color: darken(var($background), 10%);
+    border-color: darken(var($border), 12%);
+  }
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    color: var($color);
+    background-color: darken(var($background), 10%);
+    background-image: none;
+    border-color: darken(var($border), 12%);
+
+    &:hover,
+    &:focus,
+    &.focus {
+      color: var($color);
+      background-color: darken(var($background), 17%);
+      border-color: darken(var($border), 25%);
+    }
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus,
+    &.focus {
+      background-color: var($background);
+      border-color: var($border);
+    }
+  }
+
+  .badge {
+    color: var($background);
+    background-color: var($color);
+  }
+}
+
+// Button sizes
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, var($border)-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: var($border)-radius;
+}

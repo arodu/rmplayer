@@ -1,0 +1,35 @@
+
+
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: var(--custom-secondary-text);
+  border-color: var(--custom-secondary);
+  background-color: var(--custom-secondary);
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: var(--custom-secondary-text);
+  text-decoration: none;
+  background-color: var(--custom-secondary);
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: .125rem .25rem;
+  line-height: 1.5;
+  border-radius: .2rem;
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.bg-gray-light {
+    background-color: #eee !important;
+
+  .text-muted {
+    color: #444 !important;
+  }
+}
+
+// @import 'bs_mixin';
+//.btn-custom{
+//  @include button-variant('--custom-secondary-text', '--custom-secondary', '--custom-secondary');
+//}
