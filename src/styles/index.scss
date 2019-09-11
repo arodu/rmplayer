@@ -61,7 +61,7 @@
     content: none;
   }
 
-  .carousel-item{
+  .swipe-view-item{
     min-height: calc( 100vh - var(--footer-height) - 47px - 56px);
   }
 
@@ -69,7 +69,7 @@
     font-size: .8rem;
   }
 
-  
+
 
   @media (max-width: 768px) {
     .container {
@@ -92,7 +92,7 @@
     #player{
       height: var(--footer-md-height);
     }
-    .carousel-item{
+    .swipe-view-item{
       min-height: calc( 100vh - var(--footer-md-height) - 56px);
     }
   }

@@ -2,9 +2,9 @@ import React from 'react';
 
 function Library() {
   return (
-    <div data-btn="#btn-libray" className="carousel-item pt-2 accordion">
+    <div className="mt-2 swipe-view-item">
 
-      <div className="alert alert-dark mx-4">
+      <div className="alert alert-dark mx-1">
         <i className="fas fa-exclamation-triangle fa-fw"></i> Library is empty
 
         <button className="btn btn-dark btn-sm float-right rounded-0">
