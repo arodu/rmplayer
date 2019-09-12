@@ -9,7 +9,7 @@ class App extends Component{
   state = {
     playlistPos: null,
     library: [],
-    api_library: '/demo/library_demo.json',
+    api_library: 'demo/library_demo.json',
     playlist: []
   }
 
