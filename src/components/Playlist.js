@@ -1,24 +1,42 @@
 import React from 'react';
 import PlayItem from './PlayItem';
 
-function Playlist() {
-  return (
-    <div className="mt-2 swipe-view-item">
+function Playlist({playlist, library, currentPlay, playlistPos}) {
+  let p = -1
+  if(playlist.length > 0){
+    return (
+        <ul className="list-unstyled pl-1">
+          {
+            playlist.map( (id) => {
+              p++
+              let item = library.filter( (i) => (id === i.id) )
 
-      <div className="alert alert-dark mx-1">
-        <i className="fas fa-exclamation-triangle fa-fw"></i> Playlist is empty
-      </div>
+              let active = false
+              if(p === playlistPos){
+                active = true
+              }
 
-      <ul className="list-unstyled pl-1">
-        <PlayItem key="1"/>
-        <PlayItem key="2"/>
-        <PlayItem key="3"/>
-        <PlayItem key="4"/>
-        <PlayItem key="5"/>
-      </ul>
+              return (
+                <PlayItem
+                  key={p}
+                  item={item[0]}
+                  currentPlay={currentPlay}
+                  active={active}
+                  position={p}
+                />
+              )
+            })
+          }
+        </ul>
+    );
+  }else{
+    return (<div className="alert alert-dark mx-1">
+      <i className="fas fa-exclamation-triangle fa-fw"></i> Playlist is empty
+    </div>)
+  }
 
-    </div>
-  );
+
+
 }
 
 export default Playlist;

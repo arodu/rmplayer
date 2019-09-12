@@ -14,14 +14,14 @@ class PlayItem extends Component{
   }
 
   render(){
-    let {item, currentPlay, active, position} = this.props
+    let {item, active, currentPlay} = this.props
 
     return (
       <li className="media border-bottom px-0 py-2">
 
         <button
-            className = { `btn-pl-play btn btn-sm rounded-0 mr-2 ${ active ? 'btn-outline-primary' : 'btn-primary' }` }
-            onClick = { ()=>{ currentPlay(item.id, false, true, position) }}
+            className = { `btn-pl-play btn btn-sm rounded-0 mr-2 ${ active ? 'btn-outline-success' : 'btn-success' }` }
+            onClick = { ()=>{ currentPlay(item.id, true, false) } }
             disabled = { active }
           >
           <i className={ `fas fa-fw ${ active ? 'fa-play' : 'fa-play'}` }></i>
@@ -39,10 +39,10 @@ class PlayItem extends Component{
               &nbsp;
               <span className="badge badge-secondary">{ setTime(item.time) }</span>
               <a
-                href="#!"
-                className="btn-more ml-1 mr-0 collapsed"
-                onClick={ () => this.handleCollapse() }
-              >
+                  href="#!"
+                  className="btn-more ml-1 mr-0 collapsed"
+                  onClick={ () => this.handleCollapse() }
+                >
                 <i className="fas fa-chevron-down fa-fw"></i>
               </a>
             </div>

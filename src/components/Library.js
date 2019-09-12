@@ -1,20 +1,39 @@
 import React from 'react';
+import LibraryItem from './LibraryItem';
 
-function Library() {
+function Library({library, currentPlay, currentId}) {
+
+  /*<div className="alert alert-dark mx-1">
+    <i className="fas fa-exclamation-triangle fa-fw"></i> Library is empty
+
+    <button className="btn btn-dark btn-sm float-right rounded-0">
+      Update Library
+    </button>
+
+    <div className="clearfix"></div>
+  </div>*/
+
   return (
-    <div className="mt-2 swipe-view-item">
+      <ul className="list-unstyled pl-1">
+        {
+          library.map((item) => {
+            let active = false
 
-      <div className="alert alert-dark mx-1">
-        <i className="fas fa-exclamation-triangle fa-fw"></i> Library is empty
+            if(currentId!==undefined && currentId === item.id){
+              active = true
+            }
 
-        <button className="btn btn-dark btn-sm float-right rounded-0">
-          Update Library
-        </button>
-
-        <div className="clearfix"></div>
-      </div>
-
-    </div>
+            return (
+                <LibraryItem
+                  key={item.id}
+                  item={item}
+                  active={active}
+                  currentPlay={currentPlay}
+                />
+            )
+          })
+        }
+      </ul>
   );
 }
 

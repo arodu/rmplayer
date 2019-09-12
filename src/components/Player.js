@@ -1,67 +1,135 @@
 import React, {Component} from 'react';
-
+import {setTime} from '../Utils.js'
 
 class Player extends Component{
 
   state = {
-    current_time: 0,
-    current_play: {
-      id: null,
-      total_time: 0,
-      title: "",
-    },
-    repeat: false,
-    random: false,
+    total_time: 0,
+    title: "RMPlayer",
+    id: null,
+    active: false,
+    status: 'play',
   }
 
-  setTime = (time) => {
-    let minutes = Math.floor(time / 60)
-    let seconds = time - (minutes * 60)
+  constructor(props){
+    super(props)
+    this.audio = props.audio
+    this.range = React.createRef();
+    this.timer = React.createRef();
+    this.rangeMove = true
+  }
 
-    minutes = (minutes < 10) ? `0${minutes}` : `${minutes}`
-    seconds = (seconds < 10) ? `0${seconds}` : `${seconds}`
-    return `${minutes}:${seconds}`
+  handleStop = () => {
+    this.audio.pause()
+    this.audio.currentTime = 0
+  }
+
+  hangleChangeTime = () => {
+    this.audio.currentTime = this.range.current.value
+    this.rangeMove = true
+  }
+
+  UNSAFE_componentWillReceiveProps({item}) {
+    if(item != null){
+      this.loadAudio(item)
+    }
+  }
+
+  mainButton = () => {
+    let t = this
+    if(this.state.status === 'play'){
+        return (
+          <button id="btn-play" className="btn btn-outline-light border-0 rounded-0"
+            onClick={ () => t.audio.play() }
+          >
+            <i className="fas fa-play fa-3x"></i>
+          </button>
+        )
+
+      }else if(this.state.status === 'pause'){
+        return (
+          <button id="btn-pause" className="btn btn-outline-light border-0 rounded-0"
+            onClick={ () => t.audio.pause() }
+          >
+            <i className="fas fa-pause fa-3x"></i>
+          </button>
+        )
+
+      }else{
+        return (<button id="btn-loader" className="btn btn-outline-light border-0 rounded-0 " disabled><i className="fas fa-spinner fa-pulse fa-3x"></i></button>)
+
+      }
   }
 
   render(){
+    let {changePlay, total, playlistPos} = this.props
+
+
     return (
-      <div id="player" className="bg-custom fixed-bottom text-light py-1 disabled">
+      <div id="player" className={ `bg-custom fixed-bottom text-light py-1 ${ this.state.active ? '' : 'disabled' }` }>
         <div className="container position-relative">
           <div className="primary-controls">
-            <button id="btn-play" className="btn btn-outline-light border-0 rounded-0"><i className="fas fa-play fa-3x"></i></button>
-            <button id="btn-loader" className="d-none btn btn-outline-light border-0 rounded-0 " disabled><i className="fas fa-spinner fa-pulse fa-3x"></i></button>
-            <button id="btn-pause" className="d-none btn btn-outline-light border-0 rounded-0"><i className="fas fa-pause fa-3x"></i></button>
+            {this.mainButton()}
           </div>
           <div className="secondary-controls row">
               <div className="col-12 order-md-1 mb-2 pl-1">
-                <a id="btn-info" className="text-light float-right ml-1" data-toggle="collapse" href="#collapseList1">
+                <a id="btn-info" className="text-light float-right ml-1 disabled" data-toggle="collapse" href="#collapseList1">
                   <i className="fas fa-info-circle"></i>
                 </a>
-                <div id="player-title" className="title text-truncate">RMPlayer</div>
+                <div id="player-title" className="title text-truncate">{ this.state.title }</div>
               </div>
               <div className="timer-controls col-12 col-md-8 d-flex order-md-3 mb-1 pl-1">
                 <div className="flex-grow-1">
 
                   <div id="timer">
-                    <input type="range" className="form-control-range custom-range" value="0" readOnly />
+                    <input
+                        type="range"
+                        className="form-control-range custom-range"
+                        ref={this.range}
+                        min={0}
+                        max={this.state.total_time}
+                        onMouseOut={this.hangleChangeTime}
+                        onMouseDown={() => {this.rangeMove = false} }
+                    />
                   </div>
 
                 </div>
                 <div className="ml-2 time text-nowrap">
-                  <span id="current-time">{ this.setTime(this.state.current_time) }</span> / <span id="total-time">{ this.setTime(this.state.current_play.total_time) }</span>
+                  <span id="current-time" ref={this.timer}>{ setTime(0) }</span> / <span id="total-time">{ setTime(this.state.total_time) }</span>
                 </div>
               </div>
               <div className="d-flex col-12 col-md-4 order-md-2 mb-1 pl-1">
-                  <button id="btn-prev" className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"><i className="fas fa-fast-backward fa-fw"></i></button>
-                  <button id="btn-stop" className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"><i className="fas fa-stop fa-fw"></i></button>
-                  <button id="btn-next" className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"><i className="fas fa-fast-forward fa-fw"></i></button>
+                  <button
+                      disabled={ playlistPos===0 ? true : false }
+                      className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"
+                      onClick={() => changePlay('prev') }
+                    >
+                    <i className="fas fa-fast-backward fa-fw"></i>
+                  </button>
 
-                  <button id="btn-volume" data-toggle="modal" data-target="#volumeModal" className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm">
+                  <button
+                      className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"
+                      onClick={this.handleStop}
+                    >
+                    <i className="fas fa-stop fa-fw"></i>
+                  </button>
+
+                  <button
+                      disabled={ playlistPos===(total-1) ? true : false }
+                      className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"
+                      onClick={() => {
+                        changePlay('next')
+                      }}
+                    >
+                    <i className="fas fa-fast-forward fa-fw"></i>
+                  </button>
+
+                  <button disabled id="btn-volume" data-toggle="modal" data-target="#volumeModal" className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm">
                     <i className="fas fa-volume-up fa-fw icon-volume"></i>
                   </button>
 
                   <div className="btn-group dropup flex-fill mr-1 ">
-                    <button id="btn-options" type="button" className="btn btn-outline-light border-0 rounded-0 btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button disabled id="btn-options" type="button" className="btn btn-outline-light border-0 rounded-0 btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i className="fas fa-random fa-fw"></i>
                     </button>
 
@@ -102,9 +170,60 @@ class Player extends Component{
               </div>
           </div>
         </div>
-        <div className="overload"></div>
+        <div className={ `overload ${ this.state.active ? 'd-none' : '' }`}></div>
       </div>
     );
+  }
+
+
+  loadAudio = (item) => {
+    let t = this
+    let audio = t.audio
+
+    audio.src = item.url;
+    audio.load();
+    audio.play();
+
+    t.setState({
+      title: item.title,
+      id: item.id,
+    })
+
+    audio.onloadedmetadata = function() {
+      t.setState({
+        total_time: audio.duration,
+        active:true,
+      })
+    };
+
+    audio.ontimeupdate = function() {
+      if(t.rangeMove===true){
+        t.range.current.value = audio.currentTime
+      }
+      t.timer.current.innerHTML = setTime(audio.currentTime)
+    }
+
+    audio.onplaying = function() {
+      t.setState({
+        status: 'pause',
+      })
+    }
+
+    audio.onplay = function() {
+    }
+
+    audio.onpause = function() {
+      t.setState({
+        status: 'play',
+      })
+    }
+
+    audio.onwaiting = function() {
+      t.setState({
+        status: 'loader',
+      })
+    }
+
   }
 
 }
