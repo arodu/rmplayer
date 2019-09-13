@@ -19,6 +19,48 @@ class Player extends Component{
     this.rangeMove = true
   }
 
+  componentDidUpdate(prevProps, prevState){
+    let t = this
+    let item = t.props.current.item
+
+    t.audio.onloadedmetadata = function() {
+      t.setState({
+        title: item.title,
+        id: item.id,
+        total_time: t.audio.duration,
+        active:true,
+      })
+    };
+
+    t.audio.ontimeupdate = function() {
+      if(t.rangeMove===true){
+        t.range.current.value = t.audio.currentTime
+      }
+      t.timer.current.innerHTML = setTime(t.audio.currentTime)
+    }
+
+    t.audio.onplaying = function() {
+      t.setState({
+        status: 'pause',
+      })
+    }
+
+    t.audio.onplay = function() {
+    }
+
+    t.audio.onpause = function() {
+      t.setState({
+        status: 'play',
+      })
+    }
+
+    t.audio.onwaiting = function() {
+      t.setState({
+        status: 'loader',
+      })
+    }
+  }
+
   handleStop = () => {
     this.audio.pause()
     this.audio.currentTime = 0
@@ -29,11 +71,13 @@ class Player extends Component{
     this.rangeMove = true
   }
 
+  /*
   UNSAFE_componentWillReceiveProps({item}) {
     if(item != null){
       this.loadAudio(item)
     }
   }
+  */
 
   mainButton = () => {
     let t = this
@@ -62,8 +106,7 @@ class Player extends Component{
   }
 
   render(){
-    let {changePlay, total, playlistPos} = this.props
-
+    let {current} = this.props
 
     return (
       <div id="player" className={ `bg-custom fixed-bottom text-light py-1 ${ this.state.active ? '' : 'disabled' }` }>
@@ -100,9 +143,11 @@ class Player extends Component{
               </div>
               <div className="d-flex col-12 col-md-4 order-md-2 mb-1 pl-1">
                   <button
-                      disabled={ playlistPos===0 ? true : false }
+                      disabled={ current.first ? true : false }
                       className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"
-                      onClick={() => changePlay('prev') }
+                      onClick={() => {
+                        //changePlay('prev')
+                      }}
                     >
                     <i className="fas fa-fast-backward fa-fw"></i>
                   </button>
@@ -115,10 +160,10 @@ class Player extends Component{
                   </button>
 
                   <button
-                      disabled={ playlistPos===(total-1) ? true : false }
+                      disabled={ current.last ? true : false }
                       className="flex-fill mr-1 btn btn-outline-light border-0 rounded-0 btn-sm"
                       onClick={() => {
-                        changePlay('next')
+                        //changePlay('next')
                       }}
                     >
                     <i className="fas fa-fast-forward fa-fw"></i>
@@ -175,56 +220,6 @@ class Player extends Component{
     );
   }
 
-
-  loadAudio = (item) => {
-    let t = this
-    let audio = t.audio
-
-    audio.src = item.url;
-    audio.load();
-    audio.play();
-
-    t.setState({
-      title: item.title,
-      id: item.id,
-    })
-
-    audio.onloadedmetadata = function() {
-      t.setState({
-        total_time: audio.duration,
-        active:true,
-      })
-    };
-
-    audio.ontimeupdate = function() {
-      if(t.rangeMove===true){
-        t.range.current.value = audio.currentTime
-      }
-      t.timer.current.innerHTML = setTime(audio.currentTime)
-    }
-
-    audio.onplaying = function() {
-      t.setState({
-        status: 'pause',
-      })
-    }
-
-    audio.onplay = function() {
-    }
-
-    audio.onpause = function() {
-      t.setState({
-        status: 'play',
-      })
-    }
-
-    audio.onwaiting = function() {
-      t.setState({
-        status: 'loader',
-      })
-    }
-
-  }
 
 }
 

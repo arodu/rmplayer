@@ -1,9 +1,9 @@
 import React from 'react';
 import PlayItem from './PlayItem';
 
-function Playlist({playlist, library, currentPlay, playlistPos}) {
-  let p = -1
+function Playlist({playlist, library, playlistPos, handleCurrentPlay}) {
   if(playlist.length > 0){
+    let p = -1;
     return (
         <ul className="list-unstyled pl-1">
           {
@@ -20,9 +20,9 @@ function Playlist({playlist, library, currentPlay, playlistPos}) {
                 <PlayItem
                   key={p}
                   item={item[0]}
-                  currentPlay={currentPlay}
                   active={active}
                   position={p}
+                  handleCurrentPlay={handleCurrentPlay}
                 />
               )
             })
@@ -34,8 +34,6 @@ function Playlist({playlist, library, currentPlay, playlistPos}) {
       <i className="fas fa-exclamation-triangle fa-fw"></i> Playlist is empty
     </div>)
   }
-
-
 
 }
 

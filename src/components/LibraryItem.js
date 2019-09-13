@@ -14,17 +14,16 @@ class PlayItem extends Component{
   }
 
   render(){
-    let {item, active, currentPlay} = this.props
+    let {item, handleAddToPlaylist} = this.props
 
     return (
       <li className="media border-bottom px-0 py-2">
 
         <button
-            className = { `btn-pl-play btn btn-sm rounded-0 mr-2 ${ active ? 'btn-outline-success' : 'btn-success' }` }
-            onClick = { ()=>{ currentPlay(item.id, true, false) } }
-            disabled = { active }
+            className = { `btn-pl-play btn btn-sm rounded-0 mr-2 btn-success` }
+            onClick = { ()=>{ handleAddToPlaylist(item) } }
           >
-          <i className={ `fas fa-fw ${ active ? 'fa-play' : 'fa-play'}` }></i>
+          <i className={ `fas fa-fw fa-plus-circle` }></i>
         </button>
 
         <div className="media-body">

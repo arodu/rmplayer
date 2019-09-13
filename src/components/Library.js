@@ -1,7 +1,7 @@
 import React from 'react';
 import LibraryItem from './LibraryItem';
 
-function Library({library, currentPlay, currentId}) {
+function Library({library, currentId, handleAddToPlaylist}) {
 
   /*<div className="alert alert-dark mx-1">
     <i className="fas fa-exclamation-triangle fa-fw"></i> Library is empty
@@ -28,7 +28,7 @@ function Library({library, currentPlay, currentId}) {
                   key={item.id}
                   item={item}
                   active={active}
-                  currentPlay={currentPlay}
+                  handleAddToPlaylist={handleAddToPlaylist}
                 />
             )
           })
