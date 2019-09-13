@@ -65,7 +65,6 @@ class LibraryProvider extends Component{
       handleCurrentPlay(item[0], pos-1, true)
       this.handleInPosition(pos-1)
     }
-
   }
 
   handleInPosition(position){
@@ -93,7 +92,7 @@ class LibraryProvider extends Component{
             library: this.state.library,
             playlist: this.state.playlist,
             handleAddToPlaylist: this.handleAddToPlaylist,
-            handleCurrentPlay: this.handleCurrentPlay,
+            handleCurrentPlay: handleCurrentPlay,
             handleChangePlay: this.handleChangePlay,
             current: current,
             audio: audio,
