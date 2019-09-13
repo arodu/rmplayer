@@ -58,10 +58,6 @@ class PlayItem extends Component{
                 <li>Year: { item.year }</li>
               </ul>
             </div>
-
-            { /*<div className="cover align-self-end ml-2">
-              <img src="https://upload.wikimedia.org/wikipedia/en/6/64/SystemofaDownToxicityalbumcover.jpg" alt="Toxicity - System of a Down - 2001" />
-            </div>*/ }
           </div>
 
           <div className="text-right mt-2">
@@ -76,6 +72,5 @@ class PlayItem extends Component{
   }
 
 }
-
 
 export default PlayItem;

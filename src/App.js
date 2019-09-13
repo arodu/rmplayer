@@ -3,6 +3,7 @@ import Header from './components/Header.js';
 import Player from './components/Player.js';
 import Content from './components/Content.js';
 
+import LibraryProvider from './context/LibraryContext.js';
 
 class App extends Component{
 
@@ -10,8 +11,6 @@ class App extends Component{
     current: {
       item: null,
       position: null,
-      first: true,
-      last: true,
     },
     play: false,
   }
@@ -26,49 +25,10 @@ class App extends Component{
       current: {
         item: item,
         position: position,
-        first: true,
-        last: true,
       },
       play: play,
     })
   }
-
-
-  /*(id, addToPlaylist = false, play = true, position='last') => {
-    let state = {}
-
-    if(addToPlaylist){
-      this.playlist = [...this.playlist, id ]
-    }
-
-    if(play){
-      if(position==='last'){
-        state.playlistPos = (this.playlist.length - 1)
-      }else{
-        state.playlistPos = position
-      }
-    }
-
-    this.setState(state)
-
-  } */
-
-  //handleChangePlay = (direction) => {
-  //  let pos = this.state.playlistPos
-
-  //  if(direction==='next' && (pos < this.state.playlist.length-1) ){
-  //    pos++;
-  //    this.setState({
-  //      playlistPos: pos
-  //    })
-  //  }
-  //  if(direction==='prev' && (pos > 0) ){
-  //    pos--;
-  //    this.setState({
-  //      playlistPos: pos
-  //    })
-  //  }
-  //}
 
   render(){
     let {current} = this.state
@@ -80,15 +40,17 @@ class App extends Component{
     return (
       <Fragment>
         <Header />
-        <Content
-            current={current}
+        <LibraryProvider
             handleCurrentPlay={this.handleCurrentPlay}
-          />
-        <Player
-            current = {current}
+            current={current}
             audio={this.audio}
-            handlePlay={this.handlePlay}
+          >
+          <Content/>
+          <Player
+            audio={this.audio}
+            current={current}
           />
+        </LibraryProvider>
       </Fragment>
     );
   }

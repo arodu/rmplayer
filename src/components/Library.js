@@ -1,40 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
 import LibraryItem from './LibraryItem';
+import {LibraryConsumer} from '../context/LibraryContext';
 
-function Library({library, currentId, handleAddToPlaylist}) {
+class Library extends Component{
+  state={}
 
-  /*<div className="alert alert-dark mx-1">
-    <i className="fas fa-exclamation-triangle fa-fw"></i> Library is empty
+  render(){
+    return (
+      <LibraryConsumer>
+        {(value) => {
+          return (
+            <ul className="list-unstyled pl-1">
+              {
+                value.library.map((item) => {
+                  return (
+                      <LibraryItem
+                        key={item.id}
+                        item={item}
+                        handleAddToPlaylist={value.handleAddToPlaylist}
+                      />
+                  )
+                })
+              }
+            </ul>
+          );
+        }}
+      </LibraryConsumer>
+    );
+  }
 
-    <button className="btn btn-dark btn-sm float-right rounded-0">
-      Update Library
-    </button>
-
-    <div className="clearfix"></div>
-  </div>*/
-
-  return (
-      <ul className="list-unstyled pl-1">
-        {
-          library.map((item) => {
-            let active = false
-
-            if(currentId!==undefined && currentId === item.id){
-              active = true
-            }
-
-            return (
-                <LibraryItem
-                  key={item.id}
-                  item={item}
-                  active={active}
-                  handleAddToPlaylist={handleAddToPlaylist}
-                />
-            )
-          })
-        }
-      </ul>
-  );
 }
 
 export default Library;
