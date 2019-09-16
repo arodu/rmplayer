@@ -2,7 +2,7 @@
   "name": "rmplayer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://arodu.github.io/rmplayer",
+  "homepage": "http://arodu.web.ve/demo/rmplayer/",
   "dependencies": {
     "gh-pages": "^2.1.1",
     "node-sass": "^4.12.0",

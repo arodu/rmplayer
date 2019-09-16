@@ -8,7 +8,6 @@ class Playlist extends Component{
   state = {}
 
   render(){
-    let {playlistPos} = this.props
     return (
       <LibraryConsumer>
         {(value) => {
@@ -22,7 +21,7 @@ class Playlist extends Component{
                             let item = value.library.filter( (i) => (id === i.id) )
 
                             let active = false
-                            if(p === playlistPos){
+                            if(p === value.current.position){
                               active = true
                             }
 

@@ -49,6 +49,10 @@ class Player extends Component{
     t.audio.onplay = function() {
     }
 
+    t.audio.onended = function(){
+      t.handleChangePlay(t.props.current, 'next')
+    }
+
     t.audio.onpause = function() {
       t.setState({
         status: 'play',
@@ -107,11 +111,13 @@ class Player extends Component{
   }
 
   render(){
+    let t = this
     let {current} = this.props
-
     return (
       <LibraryConsumer>
-        {(value) => { return (
+        {(value) => {
+          t.handleChangePlay = value.handleChangePlay
+          return (
             <div id="player" className={ `bg-custom fixed-bottom text-light py-1 ${ this.state.active ? '' : 'disabled' }` }>
               <div className="container position-relative">
                 <div className="primary-controls">

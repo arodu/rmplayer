@@ -16,29 +16,24 @@ class LibraryProvider extends Component{
     this.loadLibraryApi()
   }
 
-  loadLibraryApi(){
+  async loadLibraryApi(){
     let t = this
     let state = {}
     let pos = null
 
-    fetch(this.state.api_library)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myJson) {
-        state.library = myJson
-        state.playlist = [1,4] // load playlist
+    try{
+      let response = await fetch(this.state.api_library)
+      state.library = await response.json()
+      state.playlist = [1,2,3,4,5,6] // load playlist
+      let item = state.library.filter((i) => (i.id === state.playlist[0] ) )
+      pos = 0
+      t.props.handleCurrentPlay(item[0], pos, false)
 
-        if(state.playlist.length > 0){
-          let item = state.library.filter((i) => (i.id === state.playlist[0] ) )
-          pos = 0
-          t.props.handleCurrentPlay(item[0], pos, false)
-        }
-      })
-      .then(function(){
-        t.setState(state)
-        t.handleInPosition(pos)
-      })
+      t.setState(state)
+      t.handleInPosition(pos)
+    }catch(e){
+      console.log(e)
+    }
 
   }
 

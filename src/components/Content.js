@@ -21,7 +21,7 @@ class Content extends Component{
     return (
       <Fragment>
         <Menu
-            changeView={this.handleChangeIndex}
+            handleChangeIndex={this.handleChangeIndex}
             indexView={indexView}
         />
         <div id="main" className="container">
