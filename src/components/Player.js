@@ -142,7 +142,7 @@ class Player extends Component{
                               max={this.state.total_time}
                               onTouchEnd={this.hangleChangeTime}
                               onMouseOut={this.hangleChangeTime}
-                              onTouchMove={() => {this.rangeMove = false} } 
+                              onTouchMove={() => {this.rangeMove = false} }
                               onMouseDown={() => {this.rangeMove = false} }
                           />
                         </div>
